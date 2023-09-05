@@ -1,0 +1,42 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<main>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">{{ object.messages.title }}</h1>
+</div>
+    <div class="col-md-offset-3">
+        <div class="col-md-6" style="float:none;margin:auto;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-text">Информация о настройках:</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>- Дата: {{ object.mailing_date }}</li>
+                            <li>- Содержание: {{ object.messages.message }}</li>
+                            {% if object.once_a_day %}
+                                <li>- Периодичность: Раз в день</li>
+                            {% elif object.once_a_week %}
+                                <li>- Периодичность: Раз в неделю</li>
+                            {% elif object.once_a_month %}
+                                <li>- Периодичность: Раз в месяц</li>
+                            {% endif %}
+                            {% if object.status %}
+                                <li>- Статус: Активный</li>
+                            {% else %}
+                                <li>- Статус: Нективный</li>
+                            {% endif %}
+                            {% if object.logs.status %}
+                                <li>- Последняя рассылка прошла успешно. Последняя дата: {{ object.logs.last_mailing_date }}</li>
+                            {% else %}
+                                <li>- Последняя рассылка не удалась</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

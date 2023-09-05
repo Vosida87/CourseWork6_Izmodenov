@@ -1,0 +1,45 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<main>
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Cоздать свою рассылку</h1>
+        <p class="lead text-muted">Приступите к созданию своей рассылки и её настройке</p>
+        <p>
+          <a href="{% url 'mailing:mailing_create' %}" class="btn btn-primary my-2">Создать рассылку</a>
+        </p>
+      </div>
+    </div>
+  </section>
+{% for object in object_list %}
+  {% if user.is_authenticated and object.owner == user %}
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="placeholder: эскиз" preserveaspectratio="xmidymid slice" focusable="false"><title>placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ object.messages.title }}</text></svg>
+
+            <div class="card-body">
+              <p class="card-text">{{ object.messages.message }}</p>
+                      <p>
+                        <a type="button" href="{% url 'mailing:mailing_view' object.id %}" class="btn btn-sm btn-outline-secondary">Cмотреть</a>
+                        <a type="button" href="{% url 'mailing:mailing_update' object.id %}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                        <a type="button" href="{% url 'mailing:mailing_delete' object.id %}" class="btn btn-sm btn-outline-secondary">Удалить</a>
+                      </p>
+                <small class="text-muted">Дата лога {{ object.logs.last_mailing_date }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  </div>
+{% endfor %}
+</main>
+{% endblock %}

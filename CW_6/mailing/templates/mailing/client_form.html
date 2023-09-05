@@ -1,0 +1,23 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<main>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Создание клиента</h1>
+</div>
+    <div class="col-md-offset-3">
+        <div class="col-md-6" style="float:none;margin:auto;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                  <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">Создать</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
