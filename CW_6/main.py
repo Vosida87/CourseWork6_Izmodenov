@@ -104,11 +104,49 @@ def main():
 
         return True
 
-    # Ниже приведён скрипт, который выполняет функцию send_by_email каждые 10 секунд
+    # Ниже пользователю предлагается выбрать период запуска программы
 
-    schedule.every(1).seconds.do(send_by_email)
+    print('Варианты настроек:')
+    print("1) Каждую минуту;")
+    print("2) Каждую каждые пол часа;")
+    print("3) Каждую каждый час;")
+    print("4) Каждые 12 часов;")
+    print("5) Каждую секунду.")
+
+    user_config_period_mode = input('Выберите из предложенных вариантов периодичность с которой программа будет '
+                                    'запускаться и проверять нужна ли '
+                                    'рассылка (ответ дайте цифрой).')
 
     while True:
+
+        if user_config_period_mode == '1':
+            print('Программа будет запускаться каждую минуту.')
+            schedule.every(1).minutes.do(send_by_email)
+            break
+        elif user_config_period_mode == '2':
+            print('Программа будет запускаться каждые пол часа.')
+            schedule.every(30).minutes.do(send_by_email)
+            break
+        elif user_config_period_mode == '3':
+            print('Программа будет запускаться каждый час.')
+            schedule.every(1).hours.do(send_by_email)
+            break
+        elif user_config_period_mode == '4':
+            print('Программа будет запускаться каждые 12 часов.')
+            schedule.every(12).hours.do(send_by_email)
+            break
+        elif user_config_period_mode == '5':
+            print('Программа будет запускаться каждую секунду.')
+            schedule.every(1).seconds.do(send_by_email)
+            break
+        else:
+            print('Было введено некорректное значение, Попробуйте ещё раз.')
+            user_config_period_mode = input()
+
+    # Ниже приведён скрипт, который выполняет функцию send_by_email под выбранный пользователем период
+
+    while True:
+
         schedule.run_pending()
         time.sleep(1)
 
