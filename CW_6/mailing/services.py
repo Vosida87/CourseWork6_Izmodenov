@@ -98,4 +98,4 @@ def send_by_email():
 
     # Возвращаю True для того, чтобы функция не возвращала None и не ломался schedule
 
-    return True
+    print("Проходит рассылка")
