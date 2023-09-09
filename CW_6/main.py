@@ -2,8 +2,6 @@ import os
 from datetime import datetime, timedelta, timezone
 from django.core.mail import send_mail
 from django.conf import settings
-import schedule
-import time
 import django
 from CW_6.settings import EMAIL_HOST_USER
 
@@ -56,6 +54,9 @@ def main():
                     mailing.logs.status = True
                     mailing.logs.save()
 
+                    with open('D:/PythonProjects/CourseWork6_Izmodenov/CW_6/test.txt', 'a') as f:
+                        f.write('Success\n')
+
             # При условии, что отправка идёт каждую неделю, разница между временем сейчас
             # и временем прошлой отправки должна быть больше или равно 1 недели
             # или же лог отсутствует
@@ -77,6 +78,9 @@ def main():
                     mailing.logs.last_mailing_date = now
                     mailing.logs.status = True
                     mailing.logs.save()
+
+                    with open('D:/PythonProjects/CourseWork6_Izmodenov/CW_6/test.txt', 'a') as f:
+                        f.write('Success\n')
 
             # При условии, что отправка идёт каждый месяц, разница между временем сейчас
             # и временем прошлой отправки должна быть больше или равно 30 дней
@@ -100,55 +104,12 @@ def main():
                     mailing.logs.status = True
                     mailing.logs.save()
 
+                    with open('D:/PythonProjects/CourseWork6_Izmodenov/CW_6/test.txt', 'a') as f:
+                        f.write('Success\n')
+
         # Возвращаю True для того, чтобы функция не возвращала None и не ломался schedule
 
         return True
-
-    # Ниже пользователю предлагается выбрать период запуска программы
-
-    print('Варианты настроек:')
-    print("1) Каждую минуту;")
-    print("2) Каждую каждые пол часа;")
-    print("3) Каждую каждый час;")
-    print("4) Каждые 12 часов;")
-    print("5) Каждую секунду.")
-
-    user_config_period_mode = input('Выберите из предложенных вариантов периодичность с которой программа будет '
-                                    'запускаться и проверять нужна ли '
-                                    'рассылка (ответ дайте цифрой).')
-
-    while True:
-
-        if user_config_period_mode == '1':
-            print('Программа будет запускаться каждую минуту.')
-            schedule.every(1).minutes.do(send_by_email)
-            break
-        elif user_config_period_mode == '2':
-            print('Программа будет запускаться каждые пол часа.')
-            schedule.every(30).minutes.do(send_by_email)
-            break
-        elif user_config_period_mode == '3':
-            print('Программа будет запускаться каждый час.')
-            schedule.every(1).hours.do(send_by_email)
-            break
-        elif user_config_period_mode == '4':
-            print('Программа будет запускаться каждые 12 часов.')
-            schedule.every(12).hours.do(send_by_email)
-            break
-        elif user_config_period_mode == '5':
-            print('Программа будет запускаться каждую секунду.')
-            schedule.every(1).seconds.do(send_by_email)
-            break
-        else:
-            print('Было введено некорректное значение, Попробуйте ещё раз.')
-            user_config_period_mode = input()
-
-    # Ниже приведён скрипт, который выполняет функцию send_by_email под выбранный пользователем период
-
-    while True:
-
-        schedule.run_pending()
-        time.sleep(1)
 
 
 if __name__ == '__main__':
